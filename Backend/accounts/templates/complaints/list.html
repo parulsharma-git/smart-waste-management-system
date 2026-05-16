@@ -1,0 +1,215 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>My Complaints</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+background:#f5f7f6;
+font-family:Arial, Helvetica, sans-serif;
+padding-top:90px;
+}
+
+/* Header */
+.page-header{
+background:#e8f5e9;
+padding:40px 0;
+text-align:center;
+margin-bottom:40px;
+}
+
+.page-header h2{
+font-weight:bold;
+color:#2e7d32;
+}
+
+/* Complaint Card */
+
+.complaint-card{
+border:none;
+border-radius:15px;
+transition:0.3s;
+}
+
+.complaint-card:hover{
+transform:translateY(-5px);
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* Complaint Image */
+
+.complaint-img{
+border-radius:10px;
+max-height:200px;
+object-fit:cover;
+}
+
+/* Status Badges */
+
+.badge{
+font-size:14px;
+padding:6px 10px;
+}
+
+/* Empty State */
+
+.empty-box{
+text-align:center;
+padding:60px;
+background:white;
+border-radius:15px;
+box-shadow:0 10px 20px rgba(0,0,0,0.08);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow" style="background:#1e3c2f;">
+<div class="container-fluid">
+
+<a class="navbar-brand fw-bold" href="/">TrashBin</a>
+
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="navMenu">
+<ul class="navbar-nav ms-auto">
+
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'home' %}">Home</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="{% url 'complaints:new' %}">Submit Complaint</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="{% url 'hub' %}">Knowledge Hub</a>
+</li>
+</div>
+</div>
+</nav>
+
+<!-- Header -->
+<div class="page-header">
+<h2>📋 My Complaints</h2>
+<p class="text-muted">Track the status of garbage issues you reported</p>
+</div>
+
+
+<div class="container">
+
+
+<!-- Django Messages -->
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success">
+{{ message }}
+</div>
+{% endfor %}
+{% endif %}
+
+
+
+<!-- Complaint List -->
+
+{% for c in complaints %}
+
+<div class="card complaint-card mb-4 shadow-sm">
+
+<div class="card-body">
+
+<div class="row align-items-center">
+
+
+<!-- Left Content -->
+
+<div class="col-md-8">
+
+<h5 class="fw-bold text-success">
+📍 {{ c.location }}
+</h5>
+
+<p class="text-muted">
+{{ c.description }}
+</p>
+
+
+<p>
+
+Status :
+
+{% if c.status == 'Pending' %}
+<span class="badge bg-warning text-dark">Pending</span>
+
+{% elif c.status == 'In Progress' %}
+<span class="badge bg-primary">In Progress</span>
+
+{% elif c.status == 'Resolved' %}
+<span class="badge bg-success">Resolved</span>
+
+{% elif c.status == 'Rejected' %}
+<span class="badge bg-danger">Rejected</span>
+{% endif %}
+
+<small class="text-muted">
+Submitted on {{ c.created_at }}
+</small>
+
+</div>
+
+
+<!-- Right Image -->
+
+<div class="col-md-4 text-center">
+
+{% if c.image %}
+<img src="{{ c.image.url }}" class="img-fluid complaint-img">
+{% else %}
+<img src="{% static 'images/noimage.png' %}" class="img-fluid complaint-img">
+{% endif %}
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<!-- Empty State -->
+
+<div class="empty-box">
+
+<h4>No Complaints Yet</h4>
+
+<p class="text-muted">
+You have not submitted any complaints yet.
+</p>
+
+<a href="{% url 'complaints:new' %}" class="btn btn-success mt-3">
+Submit First Complaint
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+
+</body>
+</html>

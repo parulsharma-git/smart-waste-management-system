@@ -1,0 +1,268 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Submit Complaint</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+background:linear-gradient(135deg,#e8f5e9,#ffffff);
+font-family:Arial, Helvetica, sans-serif;
+}
+
+/* Page spacing */
+.page-section{
+padding:80px 0;
+}
+
+/* Form card */
+.form-card{
+background:white;
+border-radius:15px;
+padding:40px;
+box-shadow:0 15px 40px rgba(0,0,0,0.15);
+transition:0.3s;
+}
+
+.form-card:hover{
+transform:translateY(-5px);
+}
+
+/* Title */
+.page-title{
+font-weight:700;
+color:#2e7d32;
+}
+
+/* Inputs */
+.form-control,
+.form-select{
+border-radius:8px;
+padding:10px;
+}
+
+/* Button */
+.btn-submit{
+background:#2e7d32;
+border:none;
+padding:12px;
+font-weight:600;
+border-radius:8px;
+transition:0.3s;
+}
+
+.btn-submit:hover{
+background:#1b5e20;
+}
+
+.info-box{
+background:#e8f5e9;
+padding:30px;
+border-radius:12px;
+height:100%;
+}
+
+</style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow" style="background:#1e3c2f;">
+<div class="container-fluid">
+
+<a class="navbar-brand fw-bold" href="/">TrashBin</a>
+
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="navMenu">
+<ul class="navbar-nav ms-auto">
+
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'home' %}">Home</a>
+
+<li class="nav-item">
+<a class="nav-link" href="{% url 'complaints:my_complaints' %}">My Complaints</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="{% url 'hub' %}">Knowledge Hub</a>
+</li>
+
+</div>
+</div>
+</nav>
+<section class="page-section">
+
+<div class="container">
+
+<div class="row g-5 align-items-center">
+
+<!-- LEFT INFO SECTION -->
+
+<div class="col-md-5">
+
+<h2 class="page-title mb-4">
+♻ Report Waste Issue
+</h2>
+
+<p class="text-muted mb-4">
+
+Use this form to report garbage problems in your area.  
+Your report helps authorities quickly identify sanitation issues and take necessary action to keep the community clean.
+
+</p>
+
+<div class="info-box mb-3">
+<h6 class="fw-bold">📷 Upload Evidence</h6>
+<p class="mb-0 text-muted">
+Attach a photo to help authorities understand the issue clearly.
+</p>
+</div>
+
+<div class="info-box mb-3">
+<h6 class="fw-bold">📍 Provide Location</h6>
+<p class="mb-0 text-muted">
+Mention the exact location so the cleaning team can reach quickly.
+</p>
+</div>
+
+<div class="info-box">
+<h6 class="fw-bold">⚡ Quick Resolution</h6>
+<p class="mb-0 text-muted">
+Your complaint will be reviewed and processed efficiently.
+</p>
+</div>
+
+</div>
+
+
+<!-- RIGHT FORM -->
+
+<div class="col-md-7">
+
+<div class="form-card">
+
+<h3 class="text-center mb-4 fw-bold">
+Submit Garbage Complaint
+</h3>
+
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+
+<!-- Garbage Type -->
+
+<div class="mb-3">
+
+<label class="form-label fw-semibold">
+Garbage Type
+</label>
+
+<select name="garbage_type" id="garbage_type" class="form-select"required>
+
+<option value="">Select Type</option>
+<option>Plastic Waste</option>
+<option>Food Waste</option>
+<option>Medical Waste</option>
+<option>Electronic Waste</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+
+<!-- Severity -->
+
+<div class="mb-3">
+
+<label class="form-label fw-semibold">
+Severity Level
+</label>
+
+<select name="severity" id="severity" class="form-select">
+
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+
+</select>
+
+</div>
+
+
+<!-- Location -->
+
+<div class="mb-3">
+
+<label class="form-label fw-semibold">
+Location
+</label>
+
+<input type="text"
+name="location"
+class="form-control"
+placeholder="Enter garbage location"
+required>
+
+</div>
+
+
+<!-- Description -->
+
+<div class="mb-3">
+    <label class="form-label fw-semibold">
+        Description
+    </label>
+
+    <textarea class="form-control"
+              name="description"
+              rows="3"
+              placeholder="Enter complaint details..."
+              required></textarea>
+</div>
+<!-- Image -->
+
+<div class="mb-4">
+
+<label class="form-label fw-semibold">
+Upload Image
+</label>
+
+<input type="file"
+name="image"
+class="form-control">
+
+</div>
+
+
+<button type="submit"
+class="btn btn-submit w-100">
+
+Submit Complaint
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+ 
+<script src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>

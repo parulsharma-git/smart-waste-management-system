@@ -1,0 +1,197 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Contact Us - TrashBin</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+  background: linear-gradient(to right, #e8f5e9, #ffffff);
+  font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+.navbar{
+  background:#1e3c2f;
+}
+
+/* Header */
+.header{
+  text-align:center;
+  padding:60px 20px 30px;
+}
+
+.header h2{
+  color:#2e7d32;
+  font-weight:bold;
+}
+
+/* Cards */
+.card{
+  border:none;
+  border-radius:15px;
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 12px 25px rgba(0,0,0,0.15);
+}
+
+/* Button */
+.btn-success{
+  background:#2e7d32;
+  border:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow">
+  <div class="container-fluid">
+
+    <a class="navbar-brand fw-bold" href="/">TrashBin</a>
+
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'complaints:new' %}">Submit Complaint</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'complaints:my_complaints' %}">My Complaints</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'hub' %}">Knowledge Hub</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'contact' %}">Contact</a>
+        </li>
+
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+<br><br><br>
+
+<!-- Header -->
+<div class="header">
+  <h2>📞 Get in Touch</h2>
+  <p class="text-muted">
+    We’re here to help you build a cleaner environment 🌿
+  </p>
+</div>
+
+<!-- Main Section -->
+<div class="container">
+
+  <div class="row justify-content-center">
+
+    <!-- LEFT: FORM -->
+    <div class="col-md-6">
+
+      <div class="card shadow p-4">
+
+        <h4 class="mb-3">Send Message</h4>
+
+        <form id="contactForm" onsubmit="return validateForm()">
+
+          <div class="mb-3">
+            <label>Name</label>
+            <input type="text" name="name" class="form-control" placeholder="Enter your name" required>
+          </div>
+
+          <div class="mb-3">
+            <label>Email</label>
+            <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+          </div>
+
+          <div class="mb-3">
+            <label>Subject</label>
+            <input type="text" name="subject" class="form-control" placeholder="Enter subject">
+          </div>
+
+          <div class="mb-3">
+            <label>Message</label>
+            <textarea class="form-control" name="message" rows="4" placeholder="Write your message..." required></textarea>
+          </div>
+
+        <button type="submit" class="btn btn-success w-100 fw-bold">
+🚀 Send Message
+</button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT: INFO -->
+    <div class="col-md-5">
+
+      <!-- Info Card -->
+      <div class="card shadow p-4 mb-4">
+
+        <h5>📍 Our Office</h5>
+        <p class="text-muted mb-1">Municipal Waste Department</p>
+        <p class="text-muted">Your City, India</p>
+
+        <hr>
+
+        <p><b>📧 Email:</b><br> support@trashbin.com</p>
+        <p><b>📞 Phone:</b><br> +91 9876543210</p>
+
+      </div>
+
+      <div class="card shadow p-4 text-center">
+  <h5>🌿 Our Mission</h5>
+  <p class="text-muted">
+    We aim to connect citizens with waste management authorities
+    and promote a cleaner environment.
+  </p>
+</div>
+    </div>
+
+  </div>
+
+</div>
+
+<br><br>
+<script>
+function validateForm(){
+
+    let email = document.getElementById("email").value;
+
+    // email check (must contain @gmail.com)
+    if(!email.endsWith("@gmail.com")){
+        alert("❌ Please enter a valid Gmail address!");
+        return false;
+    }
+
+    alert("✅ Message Sent Successfully!");
+
+    document.getElementById("contactForm").reset();
+
+    return false; // page reload rokne ke liye
+}
+</script>
+</script>
+</script>
+</body>
+</html>

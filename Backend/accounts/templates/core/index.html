@@ -1,0 +1,441 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TrashBin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+background:#f5f7f6;
+font-family:Arial, Helvetica, sans-serif;
+padding-top:70px;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* Navbar */
+.navbar{
+background:#1e3c2f;
+}
+.navbar {
+    overflow: visible !important;
+}
+
+.navbar .dropdown {
+    position: relative;
+}
+
+.navbar .dropdown-menu {
+    position: absolute !important;
+    top: 100%;
+    left: auto;
+    right: 0;
+    max-height: none !important;
+    overflow: visible !important;
+    height: auto !important;
+}
+
+/* Carousel overlay */
+.carousel-item{
+position:relative;
+}
+
+.carousel-item::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.45);
+}
+
+.carousel-caption{
+bottom:120px;
+z-index:2;
+}
+
+/* Cards */
+.card:hover{
+transform:translateY(-8px);
+transition:0.3s;
+box-shadow:0 15px 30px rgba(0,0,0,0.2);
+}
+
+/* Section colors */
+.section-white{
+background:#ffffff;
+padding:80px 0;
+}
+
+.section-green{
+background:#e8f5e9;
+padding:80px 0;
+}
+
+/* Stats */
+.stats-card{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 10px 20px rgba(0,0,0,0.1);
+}
+
+.stats-card h2{
+color:#2e7d32;
+font-weight:bold;
+}
+
+/* Footer */
+footer{
+background:#1e3c2f;
+}
+
+footer a{
+color:white;
+text-decoration:none;
+}
+
+footer a:hover{
+text-decoration:underline;
+}
+
+/* FORCE REMOVE RIGHT SCROLL (FINAL FIX) */
+body {
+    overflow-x: hidden;
+}
+
+/* REMOVE BOOTSTRAP ROW OVERFLOW PROPERLY */
+.row {
+    margin-right: calc(-1 * var(--bs-gutter-x)) !important;
+    margin-left: calc(-1 * var(--bs-gutter-x)) !important;
+}
+
+/* CAROUSEL FIX */
+.carousel-inner {
+    overflow: hidden;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow">
+<div class="container-fluid px-1">
+
+<a class="navbar-brand fw-bold d-flex align-items-center" href="#">
+<img src="{% static 'images/logo.png' %}" width="40" height="40" class="me-2 rounded-circle">
+<span class="fs-4">TrashBin</span>
+</a>
+
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="navMenu">
+
+<ul class="navbar-nav ms-auto">
+
+{% if user.is_authenticated %}
+
+<li class="nav-item">
+<a class="nav-link" href="{% url 'complaints:new' %}">Submit Complaint</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="{% url 'complaints:my_complaints' %}">My Complaints</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="{% url 'hub' %}">Knowledge Hub</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
+</li>
+
+<li class="nav-item dropdown">
+<a class="nav-link  dropdown-toggle"  data-bs-toggle="dropdown">
+{{ user.username }}
+</a>
+
+<ul class="dropdown-menu">
+<li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Profile</a></li>
+<li><a class="dropdown-item text-danger" href="{% url 'accounts:logout' %}">Logout</a></li>
+</ul>
+
+</li>
+
+{% else %}
+
+<li class="nav-item">
+<a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="{% url 'accounts:signup' %}">Sign Up</a>
+</li>
+
+{% endif %}
+
+</ul>
+
+</div>
+</div>
+</nav>
+
+<!-- HERO CAROUSEL -->
+<div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+
+<div class="carousel-inner">
+
+<div class="carousel-item active">
+<img src="{% static 'images/earth.png' %}" class="d-block w-100" style="height:550px;object-fit:cover;">
+
+<div class="carousel-caption text-center">
+
+<h1 class="fw-bold text-white">Building Cleaner Cities</h1>
+
+<p class="text-white">
+Empowering communities to report waste problems and keep neighborhoods clean.
+</p>
+
+<a href="{% url 'complaints:new' %}" class="btn btn-success px-4">
+Report Garbage
+</a>
+
+</div>
+</div>
+
+<div class="carousel-item">
+<img src="{% static 'images/img4.png' %}" class="d-block w-100" style="height:550px;object-fit:cover;">
+</div>
+
+<div class="carousel-item">
+<img src="{% static 'images/clean1.png' %}" class="d-block w-100" style="height:550px;object-fit:cover;">
+</div>
+
+</div>
+
+<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+<span class="carousel-control-prev-icon"></span>
+</button>
+
+<button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+<span class="carousel-control-next-icon"></span>
+</button>
+
+</div>
+
+
+<!-- ABOUT -->
+<section class="section-white text-center">
+
+<div class="container">
+
+<h2 class="fw-bold text-success mb-3">About TrashBin Platform</h2>
+
+<p class="text-muted">
+
+TrashBin is a smart waste reporting platform designed to help citizens quickly report garbage issues.  
+Users can submit complaints with images and location details, making it easier for authorities to identify and solve sanitation problems efficiently.
+
+</p>
+
+</div>
+</section>
+
+
+<!-- HOW IT WORKS -->
+<section class="section-green text-center">
+
+<div class="container">
+
+<h2 class="fw-bold text-success mb-5">How the System Works</h2>
+
+<div class="row">
+
+<div class="col-md-3">
+<h1>📷</h1>
+<h5 class="fw-bold">Capture Issue</h5>
+<p>Take a photo or describe the garbage problem you noticed.</p>
+</div>
+
+<div class="col-md-3">
+<h1>📤</h1>
+<h5 class="fw-bold">Submit Report</h5>
+<p>Send the complaint with location and description.</p>
+</div>
+
+<div class="col-md-3">
+<h1>📊</h1>
+<h5 class="fw-bold">Track Progress</h5>
+<p>Monitor complaint updates through your dashboard.</p>
+</div>
+
+<div class="col-md-3">
+<h1>✅</h1>
+<h5 class="fw-bold">Resolution</h5>
+<p>Authorities review reports and resolve the issue.</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- SOLUTIONS -->
+<section class="section-white text-center">
+
+<div class="container">
+
+<h2 class="fw-bold text-success mb-4">Smart Waste Solutions</h2>
+
+<div class="row">
+
+<div class="col-md-4 mb-4">
+<div class="card border-0 shadow rounded-4 h-100">
+<div class="card-body">
+<h5 class="fw-bold">Waste Reporting</h5>
+<p>Citizens can quickly report garbage accumulation with evidence.</p>
+</div>
+</div>
+</div>
+
+<div class="col-md-4 mb-4">
+<div class="card border-0 shadow rounded-4 h-100">
+<div class="card-body">
+<h5 class="fw-bold">Complaint Tracking</h5>
+<p>Users can check the status of their complaints anytime.</p>
+</div>
+</div>
+</div>
+
+<div class="col-md-4 mb-4">
+<div class="card border-0 shadow rounded-4 h-100">
+<div class="card-body">
+<h5 class="fw-bold">Environmental Awareness</h5>
+<p>Educational resources encourage responsible waste habits.</p>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- KNOWLEDGE HUB -->
+<section class="section-green text-center">
+
+<div class="container">
+
+<h2 class="fw-bold text-success mb-3">♻ Recycling Knowledge Hub</h2>
+
+<p class="text-muted mb-4">
+
+Discover tips on waste segregation, recycling practices, and eco-friendly habits that help reduce pollution and keep communities clean.
+
+</p>
+
+<a href="{% url 'hub' %}" class="btn btn-success px-4">
+Explore Hub
+</a>
+
+</div>
+</section>
+
+
+<!-- STATS -->
+<section class="section-white text-center">
+
+<div class="container">
+
+<h2 class="fw-bold text-success mb-5">Platform Impact</h2>
+
+<div class="row">
+
+<div class="col-md-4">
+<div class="stats-card">
+<h2>120+</h2>
+<p>Active Users</p>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="stats-card">
+<h2>85+</h2>
+<p>Reported Issues</p>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="stats-card">
+<h2>60+</h2>
+<p>Resolved Cases</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="text-white pt-5 pb-4">
+
+<div class="container">
+
+<div class="row">
+
+<div class="col-md-4">
+<h5 class="fw-bold">TrashBin</h5>
+<p>Smart waste reporting platform helping communities keep cities clean.</p>
+</div>
+
+<div class="col-md-4">
+<h6 class="fw-bold">Quick Links</h6>
+<ul class="list-unstyled">
+<li><a href="/">Home</a></li>
+<li><a href="{% url 'complaints:new' %}">Submit Complaint</a></li>
+<li><a href="{% url 'hub' %}">Knowledge Hub</a></li>
+<li><a href="{% url 'accounts:profile' %}">Profile</a></li>
+</ul>
+</div>
+
+<div class="col-md-4">
+<h6 class="fw-bold">Project Info</h6>
+<p>Developed to encourage citizen participation in waste management and environmental cleanliness.</p>
+</div>
+
+</div>
+
+<hr>
+
+<p class="text-center mb-0">
+© 2026 Clean India Initiative
+</p>
+
+</div>
+
+</footer>
+
+
+{% include 'core/chat.html' %}
+<script src="{% static 'js/main.js' %}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

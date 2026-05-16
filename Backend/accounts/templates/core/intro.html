@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Garbage Management</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+        .hero {
+            height: 100vh;
+            background: linear-gradient(to right, #1d976c, #93f9b9);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .box {
+            background: rgba(0,0,0,0.2);
+            padding: 40px;
+            border-radius: 10px;
+        }
+        a {
+            display: inline-block;
+            margin: 15px;
+            padding: 12px 25px;
+            background: white;
+            color: #1d976c;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 6px;
+        }
+        a:hover {
+            background: #e6fff3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="box">
+        <h1>Smart Garbage Management System</h1>
+        <p>
+            A digital platform to raise garbage complaints,  
+            track cleanliness, and improve city hygiene.
+        </p>
+
+      <a href="{% url 'accounts:signup' %}">SIGNUP</a>
+      <a href="{% url 'accounts:login' %}">LOGIN</a>
+
+
+
+    </div>
+</div>
+
+</body>
+</html>
